@@ -1,11 +1,327 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>ResEdit: Residual embeddings for precise generative image editing</title>
-  </head>
-  <body>
-    <h1>ResEdit</h1>
-    <p>Project page coming soon.</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="ResEdit: Residual embeddings for precise generative image editing">
+  <meta name="description" content="Incorporating a residual image encoding as additional conditioning enables both improved identity preservation and better editability for diffusion-based image editing.">
+  <meta name="keywords" content="image editing, diffusion models, residual embeddings, inversion, identity preservation, relighting, intrinsic editing, text-guided editing">
+  <meta name="author" content="Ahmet Canberk Baykal, Valentin Deschaintre, Yannick Hold-Geoffroy, Michael Fischer, Anna Frühstück, Cengiz Öztireli, Iliyan Georgiev">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="University of Cambridge &amp; Adobe Research">
+  <meta property="og:title" content="ResEdit: Residual embeddings for precise generative image editing">
+  <meta property="og:description" content="Incorporating a residual image encoding as additional conditioning enables both improved identity preservation and better editability for diffusion-based image editing.">
+  <meta property="og:url" content="https://johnberg1.github.io/resedit">
+  <meta property="og:image" content="https://johnberg1.github.io/resedit/static/images/teaser.jpg">
+
+  <meta name="citation_title" content="ResEdit: Residual embeddings for precise generative image editing">
+  <meta name="citation_author" content="Baykal, Ahmet Canberk">
+  <meta name="citation_author" content="Deschaintre, Valentin">
+  <meta name="citation_author" content="Hold-Geoffroy, Yannick">
+  <meta name="citation_author" content="Fischer, Michael">
+  <meta name="citation_author" content="Frühstück, Anna">
+  <meta name="citation_author" content="Öztireli, Cengiz">
+  <meta name="citation_author" content="Georgiev, Iliyan">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="EGSR 2026">
+
+  <title>ResEdit: Residual embeddings for precise generative image editing</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+</head>
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">
+              ResEdit: Residual embeddings for precise generative image editing
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://johnberg1.github.io" target="_blank">Ahmet Canberk Baykal</a><sup>1, 2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://valentin.deschaintre.fr/" target="_blank">Valentin Deschaintre</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://yannickhold.com/" target="_blank">Yannick Hold-Geoffroy</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://mfischer-ucl.github.io/" target="_blank">Michael Fischer</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://afruehstueck.github.io/" target="_blank">Anna Frühstück</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://sites.google.com/view/cengiz-oztireli-intro/home" target="_blank">Cengiz Öztireli</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://iliyan.com/" target="_blank">Iliyan Georgiev</a><sup>2</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors" style="margin-top: 0.5rem;">
+              <span class="author-block">
+                <sup>1</sup>University of Cambridge &nbsp;&nbsp;
+                <sup>2</sup>Adobe Research
+                <br>
+                <em>EGSR 2026 (Journal Track)</em>
+              </span>
+            </div>
+
+            <div class="column has-text-centered" style="margin-top: 1rem;">
+              <div class="publication-links">
+
+                <!-- Paper PDF — update href when available -->
+                <span class="link-block">
+                  <a href="#"
+                     class="external-link button is-normal is-rounded is-dark"
+                     style="opacity: 0.55; cursor: default;"
+                     onclick="return false;"
+                     title="Coming soon">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper (Coming Soon)</span>
+                  </a>
+                </span>
+
+                <!-- arXiv — update href when available -->
+                <span class="link-block">
+                  <a href="#"
+                     class="external-link button is-normal is-rounded is-dark"
+                     style="opacity: 0.55; cursor: default;"
+                     onclick="return false;"
+                     title="Coming soon">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv (Coming Soon)</span>
+                  </a>
+                </span>
+
+                <!-- GitHub code — update href when available -->
+                <span class="link-block">
+                  <a href="#"
+                     class="external-link button is-normal is-rounded is-dark"
+                     style="opacity: 0.55; cursor: default;"
+                     onclick="return false;"
+                     title="Coming soon">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code (Coming Soon)</span>
+                  </a>
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== END HERO ==================== -->
+
+
+  <!-- ==================== TEASER IMAGE ==================== -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img src="static/images/teaser.jpg"
+             alt="ResEdit overview"
+             style="width: 100%; border-radius: 6px;">
+        <h2 class="subtitle has-text-centered" style="margin-top: 1.25rem;">
+          Our framework enables high-fidelity generative editing by isolating image identity into a learned residual image embedding. Unlike traditional inversion methods that struggle with "baked-in" condition features, ResEdit explicitly separates identity from the physical condition, facilitating streamlined intrinsic-space manipulation of geometry and material, as well as reference-based relighting. By shifting the burden of reconstruction from the noise latent to this dedicated residual channel, we achieve a superior balance of identity preservation and responsive editability without necessitating model surgery.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== END TEASER IMAGE ==================== -->
+
+
+  <!-- ==================== ABSTRACT ==================== -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Conditional diffusion image generators can be repurposed for editing through inversion,
+              without the need for large-scale paired fine-tuning data. However, producing high-quality,
+              targeted edits while maintaining image identity and global consistency remains challenging,
+              as weakly conditioned inversion often embeds conflicting image features into the noise.
+              We demonstrate that incorporating a residual image encoding as additional conditioning
+              enables both improved identity preservation and better editability. We optimize this
+              residual encoding to provide a strong conditioning signal for reconstruction, thereby
+              reducing the reliance on inversion and susceptibility to its aforementioned pitfalls.
+              To ensure this residual does not interfere with desired edits, we incorporate a gradient
+              reversal-based optimization strategy that disentangles the residual from the edited
+              condition. We illustrate our method's ability to produce high-fidelity results across
+              precise intrinsic-based editing and relighting, and show proof-of-concept text-guided
+              manipulation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== END ABSTRACT ==================== -->
+
+
+  <!-- ==================== METHOD OVERVIEW ==================== -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <figure>
+        <img src="static/images/method.jpg"
+             alt="ResEdit method overview"
+             style="width: 100%; border-radius: 6px;">
+        <figcaption class="has-text-centered is-size-6" style="margin-top: 0.75rem; color: #555;">
+          <strong>Method overview.</strong>  Our framework enables high-fidelity editing through a three-stage process: (1) Given an input image and its
+          corresponding condition (e.g., albedo), we optimize a residual embedding to capture the input identity. An adversarial loss is employed to
+          disentangle the residual from the condition, encoding only the missing identity. (2) The input image is inverted relative to the joint conditioning
+          signal to obtain a noise latent. Because the residual narrows the generative distribution, this inversion is more stable and often optional.
+          (3) The edited condition is combined with the fixed residual and noise to produce the final edited image, which preserves the source identity
+          while faithfully reflecting the conditional manipulation.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+  <!-- ==================== END METHOD OVERVIEW ==================== -->
+
+
+  <!-- ==================== RESULTS ==================== -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+
+      <div class="columns is-multiline is-variable is-4">
+
+        <!-- Result 1 -->
+        <div class="column is-full result-item" style="margin-bottom: 2rem;">
+          <figure class="image" style="border-radius: 6px; overflow: hidden;">
+            <img src="static/images/material_editing.jpg" alt="Material editing result">
+          </figure>
+          <p class="has-text-centered is-size-6" style="margin-top: 0.75rem; color: #555;">
+            <strong>Material editing.</strong> We showcase diverse surface appearance edits on intrinsic channels, including normal (top), albedo (middle), and roughness (bottom). Our method (2nd col.) produces more plausible results that better align with the user edit than IntrinsicEdit (3rd col.). Text-based methods (right) struggle to produce precise edits due to the limitations of natural language. 
+            Best viewed zoomed-in.
+          </p>
+        </div>
+
+        <!-- Result 2 -->
+        <div class="column is-full result-item" style="margin-bottom: 2rem;">
+          <figure class="image" style="border-radius: 6px; overflow: hidden;">
+            <img src="static/images/removal_insertion.jpg" alt="Object removal, insertion and translation results">
+          </figure>
+          <p class="has-text-centered is-size-6" style="margin-top: 0.75rem; color: #555;">
+            <strong>Editing examples.</strong> We show edits for object removal, insertion, and translation (rows), respectively. The initial and edited intrinsic channels (e.g., edited albedo) are shown in the inset. Note that, compared to IntrinsicEdit, our method faithfully reconstructs unedited areas while resynthesizing plausible details in edited regions (e.g., shadows and reflections). Comparing to two text-based methods, Flux.1-Kontext and Nano Banana (rightmost columns), shows that text-based editing does not allow for precise editing (e.g., the rainbow pattern on the mug) and does not faithfully encode sufficiently detailed descriptions (apple example).
+          </p>
+        </div>
+
+        <!-- Result 3 -->
+        <div class="column is-full result-item" style="margin-bottom: 2rem;">
+          <figure class="image" style="border-radius: 6px; overflow: hidden;">
+            <img src="static/images/tradeoff.jpg" alt="Intrinsic consistency analysis">
+          </figure>
+          <p class="has-text-centered is-size-6" style="margin-top: 0.75rem; color: #555;">
+            <strong>Intrinsic-consistency trade-off analysis.</strong> The two axes show edit error and identity error, with lower values preferred. Our full method lies on the favorable trade-off frontier, achieving the lowest edit error and identity preservation comparable to the strongest baseline.
+          </p>
+        </div>
+
+        <!-- Result 4 -->
+        <div class="column is-full result-item" style="margin-bottom: 2rem;">
+          <figure class="image" style="border-radius: 6px; overflow: hidden;">
+            <img src="static/images/relighting.jpg" alt="Relighting results">
+          </figure>
+          <p class="has-text-centered is-size-6" style="margin-top: 0.75rem; color: #555;">
+            <strong>Relighting.</strong> Given a lighting description—in the form of text prompt (first two examples) or reference illumination (rightmost example)—we encode it into the UniLight latent space. We then use the resulting lighting tokens as input conditions for our method, achieving plausible, realistic relighting. The vanilla UniLight approach struggles with identity drifts (e.g., the vase material in the bottom left) as it is based on a simple RGB→X→RGB pipeline which relies solely on intrinsic channels for identity preservation.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- ==================== END RESULTS ==================== -->
+
+
+  <!-- ==================== BIBTEX ==================== -->
+  <!-- TODO: Uncomment and update when the paper is published.
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{baykal2026resedit,
+  title     = {ResEdit: Residual embeddings for precise generative image editing},
+  author    = {Baykal, Ahmet Canberk and Deschaintre, Valentin and
+               Hold-Geoffroy, Yannick and Fischer, Michael and
+               Fr{\"u}hst{\"u}ck, Anna and {\"O}ztireli, Cengiz and
+               Georgiev, Iliyan},
+  journal   = {Computer Graphics Forum (Proc. EGSR)},
+  year      = {2026}
+}</code></pre>
+    </div>
+  </section>
+  -->
+  <!-- ==================== END BIBTEX ==================== -->
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>,
+              adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              Licensed under
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  </main>
+</body>
 </html>
